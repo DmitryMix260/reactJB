@@ -1,23 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
+import Message from './components/Message.jsx';
+
+const myName = 'Aleksandr';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p>My first page React</p>
       </header>
+      <main>
+        <input type='text'></input>
+        <button >Submit</button>
+        <Message name={myName} />
+      </main>
     </div>
   );
 }
