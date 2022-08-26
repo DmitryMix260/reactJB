@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function Timer() {
+export function TimerComp() {
     const [time, setTime] = useState(new Date());
     useEffect(() => {
         const timerID = setInterval(() => setTime(new Date()),1000)
@@ -12,5 +12,3 @@ function Timer() {
         </>
 
 };
-
-export default Timer;
