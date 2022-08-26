@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Message({message}) {
+export const Message = ({message}) => {
   return(
   <>
     <div className="message">
