@@ -13,7 +13,7 @@ export function App() {
       const timeout = setTimeout(() => {
         addMessage({
           autor: 'BOT',
-          message: "I'm bot",
+          message: 'Im bot',
         });
       }, 1500);
       return () => clearTimeout(timeout);
