@@ -1,16 +1,24 @@
-import { useState } from "react";
-import "./App.css";
-import { Message } from "./components/message/Message.jsx";
-import { TimerComp } from "./components/timer/TimerComp.jsx";
-import { TimerClass } from "./class/timer/TimerClass.jsx";
+import { useEffect, useState } from 'react';
+import './App.css';
+import { AddMessage } from './components/message/AddMessage.jsx';
+import { MessageList } from './components/messageList/MessageList.jsx';
 
 export function App() {
-  const [message, setMessage] = useState("geek");
-  const arr = ["ivanov", "petrov", "sidorov"];
-
-  const handleChangeName = (ev) => {
-    setMessage(ev.target.value);
+  const [messages, setMessages] = useState([]);
+  const addMessage = (newMessage) => {
+    setMessages((prevMesages) => [...prevMesages, newMessage]);
   };
+  useEffect(() => {
+    if (messages.length > 0 && messages[messages.length - 1].autor !== 'BOT') {
+      const timeout = setTimeout(() => {
+        addMessage({
+          autor: 'BOT',
+          message: "I'm bot",
+        });
+      }, 1500);
+      return () => clearTimeout(timeout);
+    }
+  }, [messages]);
 
   return (
     <div className="App">
@@ -18,18 +26,8 @@ export function App() {
         <p>My first page React</p>
       </header>
       <main>
-        <div>
-          <p>Print message</p>
-        </div>
-        <input type="text" onChange={handleChangeName} />
-        <Message message={message} />
-        <TimerComp />
-        <TimerClass />
-        <ul>
-          {arr.map((item, idx) => (
-            <li key={idx}>{item}</li>
-          ))}
-        </ul>
+        <AddMessage addMessage={addMessage} />
+        <MessageList messages={messages} />
       </main>
     </div>
   );
