@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { AddMessage } from './components/message/AddMessage.jsx';
-import { MessageList } from './components/messageList/MessageList.jsx';
+import { MessageList } from './components/messageList';
 
 export function App() {
   const [messages, setMessages] = useState([]);

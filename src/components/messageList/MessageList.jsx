@@ -6,7 +6,7 @@ export const MessageList = ({ messages }) => {
       <div className={style.messagelist}>
         <ul className={style.messagelistUl}>
           {messages.map((message, idx) => (
-            <li className={style.messagelistLi} key={idx}>
+            <li className={style.messagelistLi} key={idx} data-testid="li">
               {message.autor}: {message.message}
             </li>
           ))}

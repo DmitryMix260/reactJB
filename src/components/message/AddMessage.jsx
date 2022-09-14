@@ -13,7 +13,7 @@ export const AddMessage = ({ addMessage }) => {
 
   return (
     <>
-      <form action="#" onSubmit={handleAddMessage}>
+      <form action="#" onSubmit={handleAddMessage} data-testid="addmessage">
         <div>
           <p>Print message</p>
         </div>
@@ -22,8 +22,11 @@ export const AddMessage = ({ addMessage }) => {
           value={message}
           placeholder="Type message"
           onChange={(ev) => setMessage(ev.target.value)}
+          role="input"
         />
-        <button disabled={!message}>Submit</button>
+        <button disabled={!message} role="button">
+          Submit
+        </button>
       </form>
     </>
   );
