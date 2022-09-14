@@ -2,7 +2,7 @@ import { AddMessage } from './AddMessage';
 import { fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-describe(AddMessage, () => {
+describe('AddMessage', () => {
   let addMessage, component, input, button;
   beforeEach(() => {
     addMessage = jest.fn();
