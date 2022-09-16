@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { Button, TextField } from '@mui/material';
 
 export const AddMessage = ({ addMessage }) => {
   const [message, setMessage] = useState('');
@@ -10,23 +11,30 @@ export const AddMessage = ({ addMessage }) => {
     });
     setMessage('');
   };
+  const inputFocus = useRef(null);
+
+  useEffect(() => {
+    inputFocus.current.focus();
+  });
 
   return (
     <>
+      <div>
+        <p>Print message</p>
+      </div>
       <form action="#" onSubmit={handleAddMessage} data-testid="addmessage">
-        <div>
-          <p>Print message</p>
-        </div>
-        <input
+        <TextField
           type="text"
           value={message}
           placeholder="Type message"
           onChange={(ev) => setMessage(ev.target.value)}
           role="input"
+          ref={inputFocus}
+          autoFocus={true}
         />
-        <button disabled={!message} role="button">
+        <Button disabled={!message} role="button" type="submit">
           Submit
-        </button>
+        </Button>
       </form>
     </>
   );
