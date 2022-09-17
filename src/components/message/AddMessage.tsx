@@ -1,12 +1,17 @@
-import { useEffect, useState, useRef } from 'react';
+import React, { FC, useEffect, useState, useRef, memo } from 'react';
 import { Button, TextField } from '@mui/material';
+import { AUTHOR, Message } from 'src/types';
 
-export const AddMessage = ({ addMessage }) => {
+interface AddMessageProps {
+  addMessage: (msg: Message) => void;
+}
+
+export const AddMessage: FC<AddMessageProps> = memo(({ addMessage }) => {
   const [message, setMessage] = useState('');
-  const handleAddMessage = (ev) => {
+  const handleAddMessage = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
     addMessage({
-      autor: 'user',
+      author: AUTHOR.USER,
       message,
     });
     setMessage('');
@@ -38,4 +43,4 @@ export const AddMessage = ({ addMessage }) => {
       </form>
     </>
   );
-};
+});

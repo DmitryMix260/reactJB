@@ -1,24 +1,25 @@
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState, useCallback } from 'react';
 import './App.css';
-import { AddMessage } from './components/message/AddMessage.jsx';
-import { MessageList } from './components/messageList';
+import { AddMessage } from 'components/message';
+import { MessageList } from 'components/messageList';
+import { AUTHOR, Message, Messages } from 'src/types';
 
-export function App() {
-  const [messages, setMessages] = useState([]);
-  const addMessage = (newMessage) => {
+export const App: FC = () => {
+  const [messages, setMessages] = useState<Messages>([]);
+  const addMessage = useCallback((newMessage: Message) => {
     setMessages((prevMesages) => [...prevMesages, newMessage]);
-  };
+  }, []);
   useEffect(() => {
-    if (messages.length > 0 && messages[messages.length - 1].autor !== 'BOT') {
+    if (messages.length > 0 && messages[messages.length - 1].author !== 'BOT') {
       const timeout = setTimeout(() => {
         addMessage({
-          autor: 'BOT',
+          author: AUTHOR.BOT,
           message: 'Im bot',
         });
       }, 1500);
       return () => clearTimeout(timeout);
     }
-  }, [messages]);
+  }, [messages, addMessage]);
 
   return (
     <div className="App">
@@ -31,4 +32,4 @@ export function App() {
       </main>
     </div>
   );
-}
+};
