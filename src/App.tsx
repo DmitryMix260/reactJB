@@ -2,9 +2,22 @@ import { FC, useEffect, useState, useCallback } from 'react';
 import './App.css';
 import { AddMessage } from 'components/message';
 import { MessageList } from 'components/messageList';
-import { AUTHOR, Message, Messages } from 'src/types';
+import { AUTHOR, Chat, Message, Messages } from 'src/types';
+import { ChatList } from 'components/ChatList';
+
+const defaultChats: Chat[] = [
+  {
+    id: '1',
+    name: 'First',
+  },
+  {
+    id: '2',
+    name: 'Second',
+  },
+];
 
 export const App: FC = () => {
+  const [chats, setChats] = useState<Chat[]>(defaultChats);
   const [messages, setMessages] = useState<Messages>([]);
   const addMessage = useCallback((newMessage: Message) => {
     setMessages((prevMesages) => [...prevMesages, newMessage]);
@@ -26,9 +39,12 @@ export const App: FC = () => {
       <header className="App-header">
         <p>My first page React</p>
       </header>
-      <main>
-        <AddMessage addMessage={addMessage} />
-        <MessageList messages={messages} />
+      <main className="Wrapper">
+        <ChatList chats={chats} />
+        <div className="WrapperMessage">
+          <AddMessage addMessage={addMessage} />
+          <MessageList messages={messages} />
+        </div>
       </main>
     </div>
   );

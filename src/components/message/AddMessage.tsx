@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState, useRef, memo } from 'react';
-import { Button, TextField } from '@mui/material';
+import { Button } from '@mui/material';
 import { AUTHOR, Message } from 'src/types';
 
 interface AddMessageProps {
@@ -28,14 +28,13 @@ export const AddMessage: FC<AddMessageProps> = memo(({ addMessage }) => {
         <p>Print message</p>
       </div>
       <form action="#" onSubmit={handleAddMessage} data-testid="addmessage">
-        <TextField
+        <input
           type="text"
           value={message}
           placeholder="Type message"
           onChange={(ev) => setMessage(ev.target.value)}
           role="input"
           ref={inputFocus}
-          autoFocus={true}
         />
         <Button disabled={!message} role="button" type="submit">
           Submit
