@@ -44,6 +44,17 @@ module.exports = {
               },
             },
           },
+          {
+            loader: 'typescript-plugin-css-modules',
+            options: {
+              modules: true,
+              namedExport: true,
+              camelCase: true,
+              minimize: true,
+              localIdentName: '[local]_[hash:base64:5]',
+            },
+          },
+
           'sass-loader',
         ],
       },

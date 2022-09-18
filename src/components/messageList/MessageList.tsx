@@ -1,4 +1,4 @@
-import style from 'components/messageList/MessageList.module.css';
+import style from './MessageList.module.css';
 import { FC } from 'react';
 import { Messages } from 'src/types';
 
