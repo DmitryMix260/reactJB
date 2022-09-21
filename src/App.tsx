@@ -1,9 +1,12 @@
-import { FC, useEffect, useState, useCallback } from 'react';
+import { FC, useState } from 'react';
 import './App.css';
-import { AddMessage } from 'components/message';
-import { MessageList } from 'components/messageList';
-import { AUTHOR, Chat, Message, Messages } from 'src/types';
 import { ChatList } from 'components/ChatList';
+import { Routes, Route } from 'react-router-dom';
+import { Main } from './pages/Main';
+import { Profile } from './pages/profile';
+import { AUTHOR, Chat, Message, Messages } from './types';
+import { ChatPage } from './pages/ChatPage';
+import { Header } from './components/Header';
 
 const defaultChats: Chat[] = [
   {
@@ -16,36 +19,56 @@ const defaultChats: Chat[] = [
   },
 ];
 
+const defaultMessages: Messages = {
+  '1': [{ author: AUTHOR.USER, message: 'hello, world' }],
+  '2': [{ author: AUTHOR.BOT, message: 'hello, im bot' }],
+};
+
 export const App: FC = () => {
   const [chats, setChats] = useState<Chat[]>(defaultChats);
-  const [messages, setMessages] = useState<Messages>([]);
-  const addMessage = useCallback((newMessage: Message) => {
-    setMessages((prevMesages) => [...prevMesages, newMessage]);
-  }, []);
-  useEffect(() => {
-    if (messages.length > 0 && messages[messages.length - 1].author !== 'BOT') {
-      const timeout = setTimeout(() => {
-        addMessage({
-          author: AUTHOR.BOT,
-          message: 'Im bot',
-        });
-      }, 1500);
-      return () => clearTimeout(timeout);
-    }
-  }, [messages, addMessage]);
+  const [messages, setMessages] = useState<Messages>(defaultMessages);
+
+  const onAddChat = (newChat: Chat) => {
+    setChats([...chats, newChat]);
+    setMessages({
+      ...messages,
+      [newChat.id]: [],
+    });
+  };
+
+  const onAddMessage = (chatId: string, newMessage: Message) => {
+    setMessages({
+      ...messages,
+      [chatId]: [...messages[chatId], newMessage],
+    });
+  };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>My first page React</p>
-      </header>
-      <main className="Wrapper">
-        <ChatList chats={chats} />
-        <div className="WrapperMessage">
-          <AddMessage addMessage={addMessage} />
-          <MessageList messages={messages} />
-        </div>
-      </main>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Header />}>
+          <Route index element={<Main />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="chats">
+            <Route
+              index
+              element={<ChatList chats={chats} onAddChat={onAddChat} />}
+            />
+            <Route
+              path=":chatId"
+              element={
+                <ChatPage
+                  chats={chats}
+                  onAddChat={onAddChat}
+                  messages={messages}
+                  onAddMessage={onAddMessage}
+                />
+              }
+            />
+          </Route>
+          <Route path="*" element={<div>404 page</div>} />
+        </Route>
+      </Routes>
+    </>
   );
 };
