@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import style from './Header.module.css';
 
 export const Header: FC = () => {
@@ -21,10 +21,17 @@ export const Header: FC = () => {
     <>
       <header className={style.Appheader}>
         <p>My first page React</p>
-        <ul>
-          {navigate.map((navigateli, idx) => (
+        <ul className={style.HeaderUl}>
+          {navigate.map((item, idx) => (
             <li className={style.messagelistLi} key={idx} data-testid="li">
-              <Link to={navigateli.path}> {navigateli.name} </Link>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? style.activeLink : style.NavLink
+                }
+                to={item.path}
+              >
+                {item.name}
+              </NavLink>
             </li>
           ))}
         </ul>

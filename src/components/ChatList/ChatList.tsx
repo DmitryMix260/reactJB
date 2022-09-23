@@ -3,17 +3,19 @@ import { Chat } from 'src/types';
 import { List } from '@mui/material';
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import style from './ChatList.module.css';
 
 interface ChatListProps {
   chats: Chat[];
   onAddChat: (chat: Chat) => void;
+  delChat: (chatId: string) => void;
 }
 
-export const ChatList: FC<ChatListProps> = ({ chats, onAddChat }) => {
+export const ChatList: FC<ChatListProps> = ({ chats, onAddChat, delChat }) => {
   const [value, setValue] = useState('');
 
-  const handlerSubmit = (ev: React.ChangeEvent<HTMLInputElement>) => {
+  const handlerSubmit = (ev: React.ChangeEvent<HTMLFormElement>) => {
     ev.preventDefault();
 
     if (value) {
@@ -28,11 +30,18 @@ export const ChatList: FC<ChatListProps> = ({ chats, onAddChat }) => {
   return (
     <>
       <div>
-        <List>
+        <List className={style.ChatListUl}>
           {chats.map((chat) => (
-            <Link to={`/chats/${chat.id}`} key={chat.id} data-testid="li">
-              {chat.name}
-            </Link>
+            <NavLink
+              to={`/chats/${chat.id}`}
+              key={chat.id}
+              data-testid="li"
+              className={({ isActive }) =>
+                isActive ? style.activeChatLink : style.ChatNavLink
+              }
+            >
+              {chat.name} <button onClick={() => delChat(chat.id)}>del</button>
+            </NavLink>
           ))}
         </List>
         <form action="#" onSubmit={handlerSubmit}>

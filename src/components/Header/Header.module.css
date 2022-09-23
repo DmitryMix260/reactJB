@@ -1,13 +1,30 @@
 .Appheader {
     background-color: #282c34;
     min-height: 20vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(6px + 2vmin);
+    font-size: calc(10px + 2vmin);
     color: white;
+    text-align: center;
   }
-  p {
-    color: #3599b4;
+  .HeaderUl {
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px;
+    margin: 2px 0;
   }
+  .messagelistLi {
+    list-style-type: none;
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 2px;
+    margin: 2px 0;
+} 
+.NavLink{
+  text-decoration: none;
+  color: #3599b4;
+}
+.activeLink {
+  color: black;
+}

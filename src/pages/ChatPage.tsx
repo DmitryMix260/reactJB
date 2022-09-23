@@ -11,6 +11,7 @@ interface ChatPageProps {
   onAddChat: (chat: Chat) => void;
   messages: Messages;
   onAddMessage: (chatId: string, msg: Message) => void;
+  delChat: (chatId: string) => void;
 }
 
 export const ChatPage: FC<ChatPageProps> = ({
@@ -18,6 +19,7 @@ export const ChatPage: FC<ChatPageProps> = ({
   onAddChat,
   messages,
   onAddMessage,
+  delChat,
 }) => {
   const { chatId } = useParams();
 
@@ -46,7 +48,7 @@ export const ChatPage: FC<ChatPageProps> = ({
     <>
       <div className={style.App}>
         <main className={style.Wrapper}>
-          <ChatList chats={chats} onAddChat={onAddChat} />
+          <ChatList chats={chats} onAddChat={onAddChat} delChat={delChat} />
           <div className={style.WrapperMessage}>
             <MessageList messages={chatId ? messages[chatId] : []} />
             <AddMessage addMessage={onAddMessage} />
