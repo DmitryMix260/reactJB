@@ -1,20 +1,24 @@
 import React, { FC, useEffect, useState, useRef, memo } from 'react';
 import { Button } from '@mui/material';
 import { AUTHOR, Message } from 'src/types';
+import { useParams } from 'react-router-dom';
 
 interface AddMessageProps {
-  addMessage: (msg: Message) => void;
+  addMessage: (chatId: string, msg: Message) => void;
 }
 
 export const AddMessage: FC<AddMessageProps> = memo(({ addMessage }) => {
   const [message, setMessage] = useState('');
+  const { chatId } = useParams();
   const handleAddMessage = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    addMessage({
-      author: AUTHOR.USER,
-      message,
-    });
-    setMessage('');
+    if (chatId) {
+      addMessage(chatId, {
+        author: AUTHOR.USER,
+        message,
+      });
+      setMessage('');
+    }
   };
   const inputFocus = useRef(null);
 
@@ -24,9 +28,6 @@ export const AddMessage: FC<AddMessageProps> = memo(({ addMessage }) => {
 
   return (
     <>
-      <div>
-        <p>Print message</p>
-      </div>
       <form action="#" onSubmit={handleAddMessage} data-testid="addmessage">
         <input
           type="text"

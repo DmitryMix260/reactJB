@@ -1,9 +1,9 @@
 import style from './MessageList.module.css';
 import { FC } from 'react';
-import { Messages } from 'src/types';
+import { Message } from 'src/types';
 
 interface MessageListProps {
-  messages: Messages;
+  messages: Message[];
 }
 
 export const MessageList: FC<MessageListProps> = ({ messages }) => {
