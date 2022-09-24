@@ -7,6 +7,8 @@ import { Profile } from './pages/profile';
 import { AUTHOR, Chat, Message, Messages } from './types';
 import { ChatPage } from './pages/ChatPage';
 import { Header } from './components/Header';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 const defaultChats: Chat[] = [
   {
@@ -52,37 +54,39 @@ export const App: FC = () => {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Header />}>
-          <Route index element={<Main />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="chats">
-            <Route
-              index
-              element={
-                <ChatList
-                  chats={chats}
-                  onAddChat={onAddChat}
-                  delChat={onDelChat}
-                />
-              }
-            />
-            <Route
-              path=":chatId"
-              element={
-                <ChatPage
-                  chats={chats}
-                  onAddChat={onAddChat}
-                  messages={messages}
-                  onAddMessage={onAddMessage}
-                  delChat={onDelChat}
-                />
-              }
-            />
+      <Provider store={store}>
+        <Routes>
+          <Route path="/" element={<Header />}>
+            <Route index element={<Main />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="chats">
+              <Route
+                index
+                element={
+                  <ChatList
+                    chats={chats}
+                    onAddChat={onAddChat}
+                    delChat={onDelChat}
+                  />
+                }
+              />
+              <Route
+                path=":chatId"
+                element={
+                  <ChatPage
+                    chats={chats}
+                    onAddChat={onAddChat}
+                    messages={messages}
+                    onAddMessage={onAddMessage}
+                    delChat={onDelChat}
+                  />
+                }
+              />
+            </Route>
+            <Route path="*" element={<div>404 page</div>} />
           </Route>
-          <Route path="*" element={<div>404 page</div>} />
-        </Route>
-      </Routes>
+        </Routes>
+      </Provider>
     </>
   );
 };
