@@ -1,23 +1,23 @@
 import React, { FC, useEffect, useState, useRef, memo } from 'react';
 import { Button } from '@mui/material';
-import { AUTHOR, Message } from 'src/types';
+import { AUTHOR } from 'src/types';
 import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addMessage } from 'src/store/messages/actions';
 
-interface AddMessageProps {
-  addMessage: (chatId: string, msg: Message) => void;
-}
-
-export const AddMessage: FC<AddMessageProps> = memo(({ addMessage }) => {
+export const FormMessage: FC = memo(() => {
   const [message, setMessage] = useState('');
   const { chatId } = useParams();
+  const dispath = useDispatch();
   const handleAddMessage = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
     if (chatId) {
-      addMessage(chatId, {
-        author: AUTHOR.USER,
-        message,
-      });
-      setMessage('');
+      dispath(
+        addMessage(chatId, {
+          author: AUTHOR.USER,
+          message,
+        })
+      );
     }
   };
   const inputFocus = useRef(null);
